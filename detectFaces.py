@@ -12,7 +12,6 @@ from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 
 
-
 load_dotenv()
 # Azure Cognitive Services credentials
 vision_subscription_key = os.environ["AZURE_COMPUTER_VISION_KEY"]
@@ -48,7 +47,7 @@ def activateCamera():
     i = 0
     # Initialize camera
     cap = cv2.VideoCapture(1)
-    processing_interval = 2  # in seconds
+    processing_interval = 3 # in seconds
     start_time = time.time()
     while True:
         # Capture frame-by-frame
@@ -64,11 +63,15 @@ def activateCamera():
                     # Check for person
                     if detect_persons(frame):
                         pause_capture = True
-                        i+=1
                         # Save the frame as an image
-                        cv2.imwrite(f'person_detected{i}.jpg', frame)
+                        #CHANGE NAME TO PERSON NAME --> KEEP THE i
+                        person_name = "sulay"
+                        cv2.imwrite(f'pictures/{person_name}{i}.png', frame)
                         print("Person detected!")
-                        detectFace(f'person_detected{i}.jpg')
+                        i+=1
+                        if i == 10:
+                            break
+                        #detectFace(f'person_detected{i}.jpg')
                 pause_capture = False
         # Exit if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -91,6 +94,12 @@ def detectFace(img_path):
         ], outline='red')
 
     # Display the image
+    img = img.crop(
+            (face.face_rectangle.left, 
+            face.face_rectangle.top,
+            face.face_rectangle.left + face.face_rectangle.width, 
+            face.face_rectangle.top + face.face_rectangle.height)
+        )
     img.save(img_path)
 
 
