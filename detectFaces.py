@@ -3,14 +3,13 @@ from azure.cognitiveservices.vision.computervision.models import VisualFeatureTy
 from msrest.authentication import CognitiveServicesCredentials
 import cv2
 #import numpy as np
-from io import BytesIO
+from io import BytesIO  
 import time
 import os
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
-
 
 load_dotenv()
 # Azure Cognitive Services credentials
@@ -65,12 +64,13 @@ def activateCamera():
                         pause_capture = True
                         # Save the frame as an image
                         #CHANGE NAME TO PERSON NAME --> KEEP THE i
-                        person_name = "sulay"
+                        person_name = "rajan"
                         cv2.imwrite(f'pictures/{person_name}{i}.png', frame)
                         print("Person detected!")
                         i+=1
-                        if i == 10:
+                        if i == 5:
                             break
+                        #IMPLEMENT FUNCTIONALITY
                         #detectFace(f'person_detected{i}.jpg')
                 pause_capture = False
         # Exit if 'q' is pressed
@@ -81,26 +81,26 @@ def activateCamera():
     cap.release()
     cv2.destroyAllWindows()
 
-#function to detect face in image of person
-def detectFace(img_path):
-    with open(img_path, 'r+b') as image_file:
-        detected_faces_local = face_client.face.detect_with_stream(image=image_file, return_face_id=False)
-    img = Image.open(img_path)
-    draw = ImageDraw.Draw(img)
-    for face in detected_faces_local:
-        draw.rectangle([
-            (face.face_rectangle.left, face.face_rectangle.top),
-            (face.face_rectangle.left + face.face_rectangle.width, face.face_rectangle.top + face.face_rectangle.height)
-        ], outline='red')
+# #function to detect face in image of person
+# def detectFace(img_path):
+#     with open(img_path, 'r+b') as image_file:
+#         detected_faces_local = face_client.face.detect_with_stream(image=image_file, return_face_id=False)
+#     img = Image.open(img_path)
+#     draw = ImageDraw.Draw(img)
+#     for face in detected_faces_local:
+#         draw.rectangle([
+#             (face.face_rectangle.left, face.face_rectangle.top),
+#             (face.face_rectangle.left + face.face_rectangle.width, face.face_rectangle.top + face.face_rectangle.height)
+#         ], outline='red')
 
-    # Display the image
-    img = img.crop(
-            (face.face_rectangle.left, 
-            face.face_rectangle.top,
-            face.face_rectangle.left + face.face_rectangle.width, 
-            face.face_rectangle.top + face.face_rectangle.height)
-        )
-    img.save(img_path)
+#     # Display the image
+#     img = img.crop(
+#             (face.face_rectangle.left, 
+#             face.face_rectangle.top,
+#             face.face_rectangle.left + face.face_rectangle.width, 
+#             face.face_rectangle.top + face.face_rectangle.height)
+#         )
+#     img.save(img_path)
 
 
 activateCamera()
