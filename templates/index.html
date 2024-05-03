@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Stream</title>
+    <style>
+        #video-stream {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Camera Stream</h1>
+    <button id="start-stop-btn">Stop Camera</button>
+    <br><br>
+    <img id="video-stream" src="{{ url_for('video_feed') }}" alt="Camera Stream">
+    <script src="{{url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
