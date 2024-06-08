@@ -5,7 +5,7 @@ from deepface import DeepFace
 from io import BytesIO
 from PIL import Image
 from pathlib import Path
-
+#import mysql.connector as mysql
 #each account needs to have a specific ID --> this will reference they're own contain on Azure
 # where own images are stored
 #create new container on new account!!
@@ -17,7 +17,7 @@ load_dotenv()
 
 conn_str = os.environ["AZURE_BLOB_CONN_STR"]
 blob_service_client = BlobServiceClient.from_connection_string(conn_str)
-
+#cnx = mysql.connector.connect(user="headcount", password="{your_password}", host="headcountsql.mysql.database.azure.com", port=3306, database="{your_database}", ssl_ca="/Users/armaanpatel/Documents/Development/DigiCertGlobalRootG2.crt.pem", ssl_disabled=False)
 def createContainer(container_name):
     try:
         # Create a new BlobContainerClient
@@ -64,7 +64,7 @@ def compareFaces(container_name, img_path):
         print("error in compareFaces function") 
     return output
 
-directory = Path('pictures')
+#directory = Path('pictures')
 
 # Loop through each file in the directory
 # for filepath in directory.iterdir():
